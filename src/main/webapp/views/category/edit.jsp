@@ -9,9 +9,9 @@
 
 <%--@elvariable id="category" type=""--%>
 <f:form action="/update-category/${category.categoryId}" method="post" modelAttribute="category">
-    <input type="hidden" id="id" path="id" value="${category.categoryId}" readonly/><br>
+    <input type="hidden" name="id" value="${category.categoryId}" readonly/><br>
     <label for="categoryName">categoryName</label>
-    <f:input type="text" id="categoryName" path="categoryName" value="${category.categoryName}"/><br>
+    <f:input type="text" path="categoryName" value="${category.categoryName}"/><br>
     <label>Trang Thai</label>
     <f:radiobutton path="status" value="0"  checked="checked"/><span>An</span>
     <f:radiobutton path="status" value="1" /><span>Hien</span><br>

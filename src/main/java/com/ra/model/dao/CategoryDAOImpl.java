@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 @Repository
-public class CategoryDAOImpl implements CategoryDAO{
+public class CategoryDAOImpl implements CategoryDAO {
     @Override
     public List<Category> findAll() {
         Connection connection = null;
@@ -113,13 +113,17 @@ public class CategoryDAOImpl implements CategoryDAO{
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(Integer categoryId) {
         Connection connection = null;
         try {
             connection = ConnectionDB.openConnection();
-            CallableStatement callableStatement = connection.prepareCall("{CALL PROC_DELETE_CATEGORY_BY_ID(?)}");
-            callableStatement.setInt(1, id);
-            callableStatement.executeUpdate();
+            CallableStatement callableStatement1 = connection.prepareCall("{CALL PROC_DELETE_PRODUCT_BY_CATEGORY(?)}");
+            callableStatement1.setInt(1, categoryId);
+            callableStatement1.executeUpdate();
+
+            CallableStatement callableStatement2 = connection.prepareCall("{CALL PROC_DELETE_CATEGORY_BY_ID(?)}");
+            callableStatement2.setInt(1, categoryId);
+            callableStatement2.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {

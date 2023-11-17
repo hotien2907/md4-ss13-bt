@@ -21,6 +21,9 @@
             <option value="${item.categoryId}" ${product.getCategory().categoryId == item.categoryId? "selected": ""} >${item.categoryName}</option>
         </c:forEach>
     </select><br>
+
+
+    <input type="file" name="fileUpdate" value="${product.image}">
     <input type="submit" value="UPDATE" name="action"/>
 </f:form>
 </body>

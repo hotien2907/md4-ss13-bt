@@ -29,7 +29,7 @@ public class CategoryController {
         return "category/add";
     }
     @RequestMapping("/create-category")
-    public String create(@ModelAttribute("category") Category category, RedirectAttributes redirectAttributes){
+    public String save(@ModelAttribute("category") Category category, RedirectAttributes redirectAttributes){
         Boolean check = categoryService.create(category);
         if(!check){
             return "category/add?err=";
@@ -49,8 +49,7 @@ public class CategoryController {
         System.out.println(category);
           categoryService.updateById(category,id);
         return "redirect:/category";
-
-    }
+    };
     @GetMapping("/delete-category/{id}")
     public  String delete(@PathVariable("id") int id){
         categoryService.deleteById(id);

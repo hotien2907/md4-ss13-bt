@@ -9,17 +9,18 @@
 <h1>Create Product</h1>
 
 <%--@elvariable id="product" type=""--%>
-<f:form action="/create-product" method="post" modelAttribute="product">
+<f:form action="/create-product" method="post" modelAttribute="product" enctype="multipart/form-data">
     <label for="productName">ProductName</label>
     <f:input type="text" id="productName" path="nameProduct" /><br>
     <label for="price">PRICE</label>
     <f:input type="text" id="price" path="price" /><br>
     <label >Choose Category</label>
-    <select class="form-control" name="category.categoryId">
+    <f:select class="form-control" path="category.categoryId">
         <c:forEach items="${category}" var="item">
             <option value="${item.categoryId}">${item.categoryName}</option>
         </c:forEach>
-    </select><br>
+    </f:select><br>
+    <input type="file" name="fileImage">
     <input type="submit" value="ADD" name="action"/>
 </f:form>
 </body>

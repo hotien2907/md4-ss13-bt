@@ -32,6 +32,7 @@ public class ProductDAOImpl implements ProductDAO{
                 product.setId(rs.getInt("id"));
                 product.setNameProduct(rs.getString("name_product"));
                 product.setPrice(rs.getDouble("price"));
+                product.setImage(rs.getString("image"));
                 Category category = categoryDAO.findById(rs.getInt("category_id"));
                 product.setCategory(category);
                 list.add(product);
@@ -55,7 +56,7 @@ public class ProductDAOImpl implements ProductDAO{
             CallableStatement callableStatement = connection.prepareCall("{CALL PROC_INSERT_PRODUCT(?,?,?,?)}");
             callableStatement.setString(1, product.getNameProduct());
             callableStatement.setDouble(2, product.getPrice());
-            callableStatement.setString(3,null);
+            callableStatement.setString(3,product.getImage());
             callableStatement.setInt(4,product.getCategory().getCategoryId());
 
             // thực thi
@@ -114,7 +115,7 @@ public class ProductDAOImpl implements ProductDAO{
             callableStatement.setInt(1, id);
             callableStatement.setString(2, product.getNameProduct());
             callableStatement.setDouble(3, product.getPrice());
-            callableStatement.setString(4,null);
+            callableStatement.setString(4,product.getImage());
             callableStatement.setInt(5,product.getCategory().getCategoryId());
             // thực thi
             callableStatement.executeUpdate();

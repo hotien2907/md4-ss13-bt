@@ -8,8 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -36,7 +40,22 @@ public class ProductController {
     }
 
     @RequestMapping("/create-product")
-    public String create(@ModelAttribute("product") Product product, RedirectAttributes redirectAttributes) {
+    public String create(@ModelAttribute("product") Product product, @RequestParam("fileImage") MultipartFile file, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+
+
+        String fileName = file.getOriginalFilename();
+        String path = request.getServletContext().getRealPath("uploads/images");
+        File destination = new File(path+"/"+fileName);
+
+
+        try {
+            file.transferTo(destination);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+            product.setImage(fileName);
+        System.out.println(fileName);
         Boolean check = productService.create(product);
         if (!check) {
 
@@ -57,12 +76,27 @@ public class ProductController {
     public  String edit (@PathVariable("id") Integer id,Model model) {
         model.addAttribute("category", categoryService.findAll());
         model.addAttribute("product", productService.findById(id));
+        System.out.println(productService.findById(id));
 
         return "product/edit";
     }
     @PostMapping("/update-product/{id}")
-    public String update(@PathVariable("id") Integer id, @ModelAttribute("product") Product product) {
-        System.out.println(product);
+    public String update(@PathVariable("id") Integer id, @ModelAttribute("product") Product product,@RequestParam("fileUpdate") MultipartFile fileUpdate, HttpServletRequest request) {
+
+
+        String fileName = fileUpdate.getOriginalFilename();
+        String path = request.getServletContext().getRealPath("uploads/images");
+        File destination = new File(path+"/"+fileName);
+
+
+        try {
+            fileUpdate.transferTo(destination);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        product.setImage(fileName);
+        System.out.println(fileName);
         productService.updateById(product,id);
         return "redirect:/product";
 

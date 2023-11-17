@@ -55,7 +55,8 @@
                         <td>${pr.id}</td>
                         <td>${pr.nameProduct}</td>
                         <td>${pr.price}</td>
-                        <td>${pr.image}</td>
+
+                        <td><img src="<c:url value="uploads"/>/images/${pr.image}" width="150px" alt="loi anh"></td>
                         <td>${pr.category.categoryName}</td>
 
                         <td>
